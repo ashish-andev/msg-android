@@ -1,6 +1,8 @@
 package io.msgapp.android;
 
 import android.app.Application;
+import android.support.design.widget.TextInputLayout;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import io.msgapp.android.backend.Api;
@@ -25,7 +27,32 @@ public class App extends Application {
         api = retrofit.create(Api.class);
     }
 
+    // TODO: the following moethods must be moved to another class (e.g. Helper.java)
+
     public void somethingWentWrong() {
         Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * If messageId == 0, a previuos error message will be removed.
+     * If iconId == 0, a previous icon will be removed.
+     */ // TODO: rename?
+    @SuppressWarnings("ConstantConditions")
+    public void showTextInputLayoutError(TextInputLayout v, int messageId, int iconId) {
+        if (messageId != 0) {
+            v.setError(getString(messageId));
+        } else {
+            v.setError("");
+        }
+
+        if (iconId != 0) {
+            v.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, iconId, 0);
+        } else {
+            v.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+    }
+
+    public boolean isEmpty(EditText editText) {
+        return editText.getText().toString().trim().isEmpty();
     }
 }

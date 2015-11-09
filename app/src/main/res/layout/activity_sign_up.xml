@@ -34,7 +34,7 @@
             android:id="@+id/et_name"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:hint="@string/first_and_last_names"/>
+            android:hint="@string/full_name"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
