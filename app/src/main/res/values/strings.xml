@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Msg</string>
+    <string name="app_name">msg</string>
+    <string name="username_email_or_phone_number">Username, email or phone number</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up_caps">SIGN UP</string>
+    <string name="first_and_last_names">First and last names</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="done">Done</string>
+    <string name="something_went_wrong">Oops. Something went wrong. Please try again later.</string>
+    <string name="username_taken">That username has already been taken</string>
 </resources>
