@@ -4,64 +4,31 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-    
+
     @SerializedName("username")
     @Expose
-    private String username;
+    public long id;
 
-    @SerializedName("first_name")
+    @SerializedName("username")
     @Expose
-    private String firstName;
+    public String username;
 
-    @SerializedName("last_name")
+    @SerializedName("name")
     @Expose
-    private String lastName;
+    public String name;
 
     @SerializedName("password")
     @Expose
-    private String password;
+    public String password;
 
     @SerializedName("email")
     @Expose
-    private String email;
+    public String email;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public User(String name, String username, String email, String password) {
+        this.name = name;
         this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
+        this.password = password;
     }
 }
