@@ -18,4 +18,5 @@
     <string name="password_cannot_be_blank">Password cannot be blank.</string>
     <string name="password_min_length">Password should have at least 8 characters.</string>
     <string name="prefs_current_user">io.msgapp.android.prefs.CURRENT_USER</string>
+    <string name="invalid_credentials">Invalid credentials</string>
 </resources>

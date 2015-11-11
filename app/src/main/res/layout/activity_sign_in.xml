@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/log_in"
-            android:id="@+id/loginButton_sign_in"
+            android:id="@+id/signInButton_sign_in"
             android:layout_below="@+id/et_password_sign_in"
             android:layout_centerHorizontal="true" />
 
