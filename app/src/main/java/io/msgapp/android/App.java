@@ -1,6 +1,7 @@
 package io.msgapp.android;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputLayout;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,18 +14,15 @@ import retrofit.Retrofit;
  * Created by matheus on 11/8/15.
  */
 public class App extends Application {
+    private boolean inited;
     public Api api;
     private Retrofit retrofit;
+    public SharedPreferences currentUser;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BuildVars.API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        api = retrofit.create(Api.class);
     }
 
     // TODO: the following moethods must be moved to another class (e.g. Helper.java)
@@ -54,5 +52,26 @@ public class App extends Application {
 
     public boolean isEmpty(EditText editText) {
         return editText.getText().toString().trim().isEmpty();
+    }
+
+    public String trim(EditText editText) {
+        return editText.getText().toString().trim();
+    }
+
+    public App init() {
+        if (this.inited) {
+            return this;
+        }
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BuildVars.API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        api = retrofit.create(Api.class);
+
+        this.currentUser = getSharedPreferences(getString(R.string.prefs_current_user),
+                MODE_PRIVATE);
+
+        return this;
     }
 }
