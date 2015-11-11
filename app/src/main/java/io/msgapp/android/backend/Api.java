@@ -2,12 +2,14 @@ package io.msgapp.android.backend;
 
 import com.squareup.okhttp.ResponseBody;
 
+import io.msgapp.android.BuildVars;
 import io.msgapp.android.model.User;
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Query;
 
@@ -25,6 +27,7 @@ public interface Api {
     @POST("users")
     Call<User> createUser(@Body User user);
 
+    @Headers("Authorization: Basic " + BuildVars.CLIENT_ID_SECRET_BASE_64)
     @FormUrlEncoded
     @POST("oauth/token")
     Call<ResponseBody> getOAuthToken(@Field("grant_type") String grantType,
