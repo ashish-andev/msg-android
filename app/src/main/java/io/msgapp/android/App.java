@@ -64,7 +64,7 @@ public class App extends Application {
         }
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BuildVars.API_BASE_URL)
+                .baseUrl(BuildVars.BASE_URL + "/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(Api.class);
