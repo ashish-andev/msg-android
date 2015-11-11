@@ -1,5 +1,6 @@
 package io.msgapp.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -17,6 +20,7 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.msgapp.android.model.User;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -26,21 +30,24 @@ import static io.msgapp.android.BuildVars.LOG_TAG;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    @Bind(R.id.et_name_wrapper)
+    @Bind(R.id.et_name_wrapper_sign_up)
     protected TextInputLayout eTNameWrapper;
     private EditText eTName;
 
-    @Bind(R.id.et_username_wrapper)
+    @Bind(R.id.et_username_wrapper_sign_up)
     protected TextInputLayout eTUsernameWrapper;
     private EditText eTUsername;
 
-    @Bind(R.id.et_email_wrapper)
+    @Bind(R.id.et_email_wrapper_sign_up)
     protected TextInputLayout eTEmailWrapper;
     private EditText eTEmail;
 
-    @Bind(R.id.et_password_wrapper)
+    @Bind(R.id.et_password_wrapper_sign_up)
     protected TextInputLayout eTPasswordWrapper;
     private EditText eTPassword;
+
+    @Bind(R.id.progressBar_sign_up)
+    protected ProgressBar progressBar;
 
     private App app;
 
@@ -54,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.actionBar);
-        this.app          = (App) getApplication();
+        this.app          = ((App) getApplication()).init();
         eTName            = eTNameWrapper.getEditText();
         eTUsername        = eTUsernameWrapper.getEditText();
         eTEmail           = eTEmailWrapper.getEditText();
@@ -316,9 +323,54 @@ public class SignUpActivity extends AppCompatActivity {
                             R.string.password_cannot_be_blank, R.drawable.ic_error_red);
                     ok = false;
                 }
-                if (ok) 
-                    Log.d(LOG_TAG, "^~^");
-                
+                if (ok) {
+                    eTNameWrapper.setVisibility(View.INVISIBLE);
+                    eTUsernameWrapper.setVisibility(View.INVISIBLE);
+                    eTEmailWrapper.setVisibility(View.INVISIBLE);
+                    eTPasswordWrapper.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    final User user = new User(app.trim(eTName), app.trim(eTUsername), app.trim(eTEmail),
+                            app.trim(eTPassword));
+
+                    app.api.createUser(user).enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Response<User> response, Retrofit retrofit) {
+                            if (response.isSuccess()) {
+                                Log.d(LOG_TAG, response.body().toString());
+                                app.currentUser.edit().putLong("id", response.body().id)
+                                        .putString("username", response.body().username)
+                                        .putString("email", response.body().email)
+                                        .apply();
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("username", user.username);
+                                resultIntent.putExtra("password", user.password);
+                                setResult(RESULT_OK, resultIntent);
+                                finish();
+                            } else {
+                                eTNameWrapper.setVisibility(View.VISIBLE);
+                                eTUsernameWrapper.setVisibility(View.VISIBLE);
+                                eTEmailWrapper.setVisibility(View.VISIBLE);
+                                eTPasswordWrapper.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.INVISIBLE);
+                                try {
+                                    Log.d(LOG_TAG, response.errorBody().string());
+                                    app.somethingWentWrong();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    app.somethingWentWrong();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+
+                }
+
                 return ok;
 
             default:
