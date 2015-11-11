@@ -74,4 +74,8 @@ public class App extends Application {
         this.inited = true;
         return this;
     }
+
+    public boolean signedIn() {
+        return this.currentUser.getString("access_token", null) != null;
+    }
 }
