@@ -71,7 +71,7 @@ public class App extends Application {
 
         this.currentUser = getSharedPreferences(getString(R.string.prefs_current_user),
                 MODE_PRIVATE);
-
+        this.inited = true;
         return this;
     }
 }
