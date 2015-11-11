@@ -140,6 +140,7 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Throwable t) {
                         t.printStackTrace();
+                        signInError(R.string.something_went_wrong);
                     }
                 });
     }
