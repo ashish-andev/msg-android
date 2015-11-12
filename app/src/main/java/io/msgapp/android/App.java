@@ -15,9 +15,9 @@ import retrofit.Retrofit;
  */
 public class App extends Application {
     private boolean inited;
-    public Api api;
+    private Api api;
     private Retrofit retrofit;
-    public SharedPreferences currentUser;
+    private SharedPreferences currentUser;
 
     @Override
     public void onCreate() {
@@ -78,4 +78,8 @@ public class App extends Application {
     public boolean signedIn() {
         return this.currentUser.getString("access_token", null) != null;
     }
+
+    public Api getApi() { return api; }
+
+    public SharedPreferences getCurrentUser() { return currentUser; }
 }

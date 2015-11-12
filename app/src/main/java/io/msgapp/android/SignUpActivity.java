@@ -136,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 R.string.username_min_length, R.drawable.ic_error_red);
                                         return;
                                     }
-                                    Call<Boolean> call = app.api.usernameIsAvailable(value);
+                                    Call<Boolean> call = app.getApi().usernameIsAvailable(value);
                                     call.enqueue(new Callback<Boolean>() {
                                         @Override
                                         public void onResponse(Response<Boolean> response, Retrofit retrofit) {
@@ -199,7 +199,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     app.showTextInputLayoutError(eTEmailWrapper,
                                             R.string.email_cannot_be_blank, R.drawable.ic_error_red);
                                 } else {
-                                    Call<Boolean> call = app.api.emailIsAvailable(value);
+                                    Call<Boolean> call = app.getApi().emailIsAvailable(value);
                                     call.enqueue(new Callback<Boolean>() {
                                         @Override
                                         public void onResponse(Response<Boolean> response, Retrofit retrofit) {
@@ -333,12 +333,12 @@ public class SignUpActivity extends AppCompatActivity {
                     final User user = new User(app.trim(eTName), app.trim(eTUsername), app.trim(eTEmail),
                             app.trim(eTPassword));
 
-                    app.api.createUser(user).enqueue(new Callback<User>() {
+                    app.getApi().createUser(user).enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Response<User> response, Retrofit retrofit) {
                             if (response.isSuccess()) {
                                 Log.d(LOG_TAG, response.body().toString());
-                                app.currentUser.edit().putLong("id", response.body().id)
+                                app.getCurrentUser().edit().putLong("id", response.body().id)
                                         .putString("username", response.body().username)
                                         .putString("email", response.body().email)
                                         .apply();

@@ -107,14 +107,14 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void doSignIn(String username, String password) {
-        app.api.getOAuthToken("password", username, password)
+        app.getApi().getOAuthToken("password", username, password)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
                         if (response.isSuccess()) {
                             try {
                                 JSONObject obj = new JSONObject(response.body().string());
-                                app.currentUser.edit().putString("access_token",
+                                app.getCurrentUser().edit().putString("access_token",
                                         obj.getString("access_token")).apply();
                                 startActivity(new Intent(SignInActivity.this, MainActivity.class));
                                 finish();
