@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="RtlSymmetry">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:id="@+id/avatar_wrapper">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_chat_preview"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/avatar_placeholder" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewsWrapper"
+        android:paddingStart="72dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fulano"
+            android:id="@+id/user_name_chat_preview"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hey there!"
+            android:id="@+id/last_message_preview"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:paddingEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="11:34"
+        android:id="@+id/last_message_when"
+        android:layout_alignTop="@+id/avatar_wrapper"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/message_status"
+        android:layout_alignBottom="@+id/last_message_when"
+        android:layout_toStartOf="@+id/last_message_when"
+        android:layout_alignTop="@+id/textViewsWrapper" />
+
+</RelativeLayout>
