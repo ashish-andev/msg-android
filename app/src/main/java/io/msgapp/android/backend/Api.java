@@ -2,6 +2,8 @@ package io.msgapp.android.backend;
 
 import com.squareup.okhttp.ResponseBody;
 
+import java.util.List;
+
 import io.msgapp.android.BuildVars;
 import io.msgapp.android.model.User;
 import retrofit.Call;
@@ -9,6 +11,7 @@ import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Query;
@@ -33,4 +36,10 @@ public interface Api {
     Call<ResponseBody> getOAuthToken(@Field("grant_type") String grantType,
                                      @Field("username") String username,
                                      @Field("password") String password);
+
+    @GET("users")
+    Call<List<User>> getUserByUsername(@Header("Authorization") String authorization,
+                                       @Query("filter[where][username]") String username);
+
+    // TODO: write an OkHttp interceptor to automatically add Authorization Header
 }
