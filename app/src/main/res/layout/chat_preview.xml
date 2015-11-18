@@ -57,9 +57,10 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/message_status"
+        android:id="@+id/last_message_status"
         android:layout_alignBottom="@+id/last_message_when"
         android:layout_toStartOf="@+id/last_message_when"
-        android:layout_alignTop="@+id/textViewsWrapper" />
+        android:layout_alignTop="@+id/textViewsWrapper"
+        android:src="@drawable/ic_cloud_grey"/>
 
 </RelativeLayout>
