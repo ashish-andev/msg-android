@@ -23,6 +23,8 @@ public class SocketManager {
     private Socket socket;
 
     public final static String EVENT_AUTHENTICATED = "server.authentication.success";
+    public final static String EVENT_SERVER_CONVERSATION_CREATED = "server.conversation.created";
+    public final static String EVENT_CONVERSATION_CREATE = "conversation.create";
 
     private SocketManager(App app) {
         this.app = app;
@@ -64,8 +66,8 @@ public class SocketManager {
     }
 
     public void addListener(String event, Emitter.Listener listener) {
+        this.socket.off(event, listener);
         this.socket.on(event, listener);
-
     }
 
     private final Emitter.Listener onConnect = new Emitter.Listener() {
