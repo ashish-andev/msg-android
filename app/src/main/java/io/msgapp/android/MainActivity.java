@@ -4,19 +4,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.msgapp.android.model.ChatPreview;
 import io.msgapp.android.model.User;
 import io.socket.emitter.Emitter;
 import retrofit.Callback;
@@ -25,16 +21,12 @@ import retrofit.Retrofit;
 
 import static io.msgapp.android.BuildVars.LOG_TAG;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener {
 
     @Bind(R.id.toolbar)
     protected Toolbar toolbar;
 
     private App app;
-
-    @Bind(R.id.recyclerView_main)
-    protected RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         if (!this.app.signedIn()) {
             startActivity(new Intent(this, SignInActivity.class));
             finish();
+            return;
         }
 
         super.onCreate(savedInstanceState);
@@ -62,19 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        List<ChatPreview> list = new ArrayList<>();
-        list.add(new ChatPreview("", "John", "Hey man!!", "20:34", ChatPreview.STATUS_SENT));
-        list.add(new ChatPreview("", "Lara", "Good night ^~^", "20:03", ChatPreview.STATUS_READ));
-        list.add(new ChatPreview("", "Frank", "I'll check that", "19:22", ChatPreview.STATUS_DELIVERED));
-        list.add(new ChatPreview("", "Bob", "Ok, send me an email", "14:46", ChatPreview.STATUS_READ));
-        list.add(new ChatPreview("", "Jack", "You too", "12:27", 0));
-
-        recyclerView.setAdapter(new MainRecyclerViewAdapter(list));
         Log.d(LOG_TAG, "MainActivity onCreate");
-
     }
 
     @Override
@@ -112,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                                     SocketManager.getInstance(app)
                                             .send(SocketManager.EVENT_CONVERSATION_CREATE,
                                                     "{\"userId\": " + user.id + "}");
-
                                 } else {
                                     try {
                                         Log.d(LOG_TAG, response.errorBody().string());
@@ -129,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-
-
             }
         }
     }
@@ -143,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
