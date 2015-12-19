@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +62,16 @@ public class MainFragment extends Fragment {
         list.add(new ChatPreview("", "Bob", "Ok, send me an email", "14:46", ChatPreview.STATUS_READ));
         list.add(new ChatPreview("", "Jack", "You too", "12:27", 0));
 
-        recyclerView.setAdapter(new MainRecyclerViewAdapter(list));
+        MainRecyclerViewAdapter adapter = new MainRecyclerViewAdapter(list);
+        adapter.setClickListener(new MainRecyclerViewAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                TextView userName = (TextView) v.findViewById(R.id.user_name_chat_preview);
+                Log.d(BuildVars.LOG_TAG, position + " " + userName.getText().toString());
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
         return v;
     }
 
