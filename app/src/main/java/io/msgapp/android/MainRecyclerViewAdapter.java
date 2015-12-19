@@ -19,8 +19,9 @@ import io.msgapp.android.model.ChatPreview;
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder> {
 
     private List<ChatPreview> previews;
+    private static ClickListener clickListener;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public CircleImageView avatar;
         public TextView userName;
         public TextView messagePreview;
@@ -31,7 +32,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         public ViewHolder(View v) {
             super(v);
-
+            v.setOnClickListener(this);
             this.avatar = (CircleImageView) v.findViewById(R.id.avatar_chat_preview);
             this.userName = (TextView) v.findViewById(R.id.user_name_chat_preview);
             this.messagePreview = (TextView) v.findViewById(R.id.last_message_preview);
@@ -47,6 +48,21 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                       R.drawable.ic_done_grey, R.drawable.ic_error_grey);
             Util.tint(this.context, R.color.green, R.drawable.ic_done_all_green);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (clickListener != null) {
+                clickListener.onItemClick(getAdapterPosition(), v);
+            }
+        }
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+    }
+
+    public void setClickListener(ClickListener clickListener) {
+        MainRecyclerViewAdapter.clickListener = clickListener;
     }
 
     public MainRecyclerViewAdapter(List<ChatPreview> previews) {
