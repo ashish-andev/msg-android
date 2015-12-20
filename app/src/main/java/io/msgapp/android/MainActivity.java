@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         public void call(Object... args) {
             Log.d(LOG_TAG, "conversation created");
             Log.d(LOG_TAG, args[0].toString());
-
+            startActivity(new Intent(MainActivity.this, ChatActivity.class));
         }
     };
 

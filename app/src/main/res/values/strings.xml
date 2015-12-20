@@ -19,4 +19,6 @@
     <string name="password_min_length">Password should have at least 8 characters.</string>
     <string name="prefs_current_user">io.msgapp.android.prefs.CURRENT_USER</string>
     <string name="invalid_credentials">Invalid credentials</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
