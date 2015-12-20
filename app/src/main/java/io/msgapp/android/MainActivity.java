@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.app = ((App) getApplication()).init();
+        super.onCreate(savedInstanceState);
 
         if (!this.app.signedIn()) {
             startActivity(new Intent(this, SignInActivity.class));
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             return;
         }
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
