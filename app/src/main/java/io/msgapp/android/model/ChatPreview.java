@@ -5,6 +5,7 @@ package io.msgapp.android.model;
  */
 public class ChatPreview {
     public String avatarUrl;
+    public int userId;
     public String userName;
     public String messagePreview;
     public String messageWhen;
@@ -16,9 +17,10 @@ public class ChatPreview {
     public final static int STATUS_DELIVERED = 3;
     public final static int STATUS_READ = 4;
 
-    public ChatPreview(String avatarUrl, String userName, String messagePreview, String messageWhen,
+    public ChatPreview(String avatarUrl, int userId, String userName, String messagePreview, String messageWhen,
                        int status) {
         this.avatarUrl = avatarUrl;
+        this.userId = userId;
         this.userName  = userName;
         this.messagePreview = messagePreview;
         this.messageWhen = messageWhen;
