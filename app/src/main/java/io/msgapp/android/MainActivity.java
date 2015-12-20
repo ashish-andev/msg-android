@@ -73,48 +73,49 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     private void handleIntent() {
         Intent intent = this.getIntent();
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals(Intent.ACTION_VIEW)) {
+                Uri uri = intent.getData();
 
-        if (intent.getAction().equals(Intent.ACTION_VIEW)) {
-            Uri uri = intent.getData();
+                if (Objects.equals(uri.getHost(), "msgapp.me")) {
+                    String username = uri.getPathSegments().get(0);
 
-            if (Objects.equals(uri.getHost(), "msgapp.me")) {
-                String username = uri.getPathSegments().get(0);
-
-                app.getApi().getUserByUsername("Bearer " + app.getCurrentUser().getString("access_token", ""), username)
-                        .enqueue(new Callback<List<User>>() {
-                            @Override
-                            public void onResponse(Response<List<User>> response, Retrofit retrofit) {
-                                if (response.isSuccess()) {
-                                    if (response.body().size() != 0) {
+                    app.getApi().getUserByUsername("Bearer " + app.getCurrentUser().getString("access_token", ""), username)
+                            .enqueue(new Callback<List<User>>() {
+                                @Override
+                                public void onResponse(Response<List<User>> response, Retrofit retrofit) {
+                                    if (response.isSuccess()) {
+                                        if (response.body().size() != 0) {
 
 
-                                        User user = response.body().get(0);
+                                            User user = response.body().get(0);
 
-                                        SocketManager.getInstance(app).
-                                                addListener(SocketManager.EVENT_SERVER_CONVERSATION_CREATED,
-                                                        onConversationCreated);
-                                        SocketManager.getInstance(app)
-                                                .send(SocketManager.EVENT_CONVERSATION_CREATE,
-                                                        "{\"userId\": " + user.id + "}");
+                                            SocketManager.getInstance(app).
+                                                    addListener(SocketManager.EVENT_SERVER_CONVERSATION_CREATED,
+                                                            onConversationCreated);
+                                            SocketManager.getInstance(app)
+                                                    .send(SocketManager.EVENT_CONVERSATION_CREATE,
+                                                            "{\"userId\": " + user.id + "}");
+                                        } else {
+                                            app.somethingWentWrong(); // TODO user does not exist
+                                        }
                                     } else {
-                                        app.somethingWentWrong(); // TODO user does not exist
-                                    }
-                                } else {
-                                    try {
-                                        Log.d(LOG_TAG, response.errorBody().string());
-                                        app.somethingWentWrong();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                        app.somethingWentWrong();
+                                        try {
+                                            Log.d(LOG_TAG, response.errorBody().string());
+                                            app.somethingWentWrong();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                            app.somethingWentWrong();
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Throwable t) {
+                                @Override
+                                public void onFailure(Throwable t) {
 
-                            }
-                        });
+                                }
+                            });
+                }
             }
         }
     }
