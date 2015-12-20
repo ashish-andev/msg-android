@@ -85,14 +85,20 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                             @Override
                             public void onResponse(Response<List<User>> response, Retrofit retrofit) {
                                 if (response.isSuccess()) {
-                                    User user = response.body().get(0);
+                                    if (response.body().size() != 0) {
 
-                                    SocketManager.getInstance(app).
-                                            addListener(SocketManager.EVENT_SERVER_CONVERSATION_CREATED,
-                                                    onConversationCreated);
-                                    SocketManager.getInstance(app)
-                                            .send(SocketManager.EVENT_CONVERSATION_CREATE,
-                                                    "{\"userId\": " + user.id + "}");
+
+                                        User user = response.body().get(0);
+
+                                        SocketManager.getInstance(app).
+                                                addListener(SocketManager.EVENT_SERVER_CONVERSATION_CREATED,
+                                                        onConversationCreated);
+                                        SocketManager.getInstance(app)
+                                                .send(SocketManager.EVENT_CONVERSATION_CREATE,
+                                                        "{\"userId\": " + user.id + "}");
+                                    } else {
+                                        app.somethingWentWrong(); // TODO user does not exist
+                                    }
                                 } else {
                                     try {
                                         Log.d(LOG_TAG, response.errorBody().string());
