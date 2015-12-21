@@ -5,8 +5,9 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.widget.TextInputLayout;
-import android.transition.Fade;
+import android.transition.Slide;
 import android.transition.Transition;
+import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -91,11 +92,11 @@ public class App extends Application {
     // See http://stackoverflow.com/questions/26600263
     public void excludeFromTransition(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Transition fade = new Fade();
+            Transition fade = new Slide(Gravity.END);
             fade.excludeTarget(android.R.id.statusBarBackground, true);
             fade.excludeTarget(android.R.id.navigationBarBackground, true);
-            fade.excludeTarget(R.id.toolbar_wrapper, true);
-            activity.getWindow().setExitTransition(fade);
+//            fade.excludeTarget(R.id.toolbar_wrapper, true);
+//            activity.getWindow().setExitTransition(fade);
             activity.getWindow().setEnterTransition(fade);
         }
     }
