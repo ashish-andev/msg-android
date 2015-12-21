@@ -52,13 +52,13 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         @Override
         public void onClick(View v) {
             if (clickListener != null) {
-                clickListener.onItemClick(getAdapterPosition(), avatar);
+                clickListener.onItemClick(getAdapterPosition(), v);
             }
         }
     }
 
     public interface ClickListener {
-        void onItemClick(int position, CircleImageView avatar);
+        void onItemClick(int position, View view);
     }
 
     public ChatPreview getItem(int position) {

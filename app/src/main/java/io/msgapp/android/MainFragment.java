@@ -14,7 +14,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.msgapp.android.model.ChatPreview;
 
 public class MainFragment extends Fragment {
@@ -63,8 +62,8 @@ public class MainFragment extends Fragment {
         final MainRecyclerViewAdapter adapter = new MainRecyclerViewAdapter(list);
         adapter.setClickListener(new MainRecyclerViewAdapter.ClickListener() {
             @Override
-            public void onItemClick(int position, CircleImageView avatar) {
-                parent.onFragmentInteraction(adapter.getItem(position).getUserId(), avatar);
+            public void onItemClick(int position, View view) {
+                parent.onFragmentInteraction(adapter.getItem(position).getUserId(), view);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -91,7 +90,7 @@ public class MainFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(long userId, CircleImageView avatar);
+        void onFragmentInteraction(long userId, View view);
     }
 
 }

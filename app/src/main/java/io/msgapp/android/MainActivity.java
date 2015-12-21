@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +16,6 @@ import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.msgapp.android.model.User;
 import io.socket.emitter.Emitter;
 import retrofit.Callback;
@@ -133,9 +134,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     };
 
     @Override
-    public void onFragmentInteraction(long userId, CircleImageView avatar) {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
-                avatar, "transition_name_avatar_main_chat");
+    public void onFragmentInteraction(long userId, View view) {
+
+        Pair<View, String> avatar = Pair.create(view.findViewById(R.id.avatar_chat_preview), "transition_name_avatar_main_chat");
+        Pair<View, String> userName = Pair.create(view.findViewById(R.id.user_name_chat_preview), "transition_name_user_name_main_chat");
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+                avatar, userName);
 
         startActivity(new Intent(MainActivity.this, ChatActivity.class), options.toBundle());
 

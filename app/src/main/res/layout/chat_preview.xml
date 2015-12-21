@@ -39,7 +39,9 @@
             android:layout_height="wrap_content"
             android:text="Fulano"
             android:id="@+id/user_name_chat_preview"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:transitionName="transition_name_user_name_main_chat"
+            tools:ignore="UnusedAttribute" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

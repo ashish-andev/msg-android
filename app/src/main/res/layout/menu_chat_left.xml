@@ -4,12 +4,50 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avatar_chat_preview"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/avatar_placeholder"
-        android:transitionName="transition_name_avatar_main_chat"
-        tools:ignore="UnusedAttribute"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:id="@+id/avatar_wrapper">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_chat_preview"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/avatar_placeholder"
+            android:transitionName="transition_name_avatar_main_chat"
+            tools:ignore="UnusedAttribute" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewsWrapper"
+        android:paddingStart="58dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="John"
+            android:id="@+id/user_name_chat"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:transitionName="transition_name_user_name_main_chat"
+            tools:ignore="UnusedAttribute"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last seen at 16:00"
+            android:id="@+id/last_seen_at"
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
