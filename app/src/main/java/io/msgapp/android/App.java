@@ -1,8 +1,12 @@
 package io.msgapp.android;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.design.widget.TextInputLayout;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -82,4 +86,17 @@ public class App extends Application {
     public Api getApi() { return api; }
 
     public SharedPreferences getCurrentUser() { return currentUser; }
+
+    // Prevent navigation bar, status bar and toolbar from flashing
+    // See http://stackoverflow.com/questions/26600263
+    public void excludeFromTransition(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Transition fade = new Fade();
+            fade.excludeTarget(android.R.id.statusBarBackground, true);
+            fade.excludeTarget(android.R.id.navigationBarBackground, true);
+            fade.excludeTarget(R.id.toolbar_wrapper, true);
+            activity.getWindow().setExitTransition(fade);
+            activity.getWindow().setEnterTransition(fade);
+        }
+    }
 }

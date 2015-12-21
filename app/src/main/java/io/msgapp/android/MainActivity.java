@@ -3,6 +3,7 @@ package io.msgapp.android;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,6 +14,7 @@ import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.msgapp.android.model.User;
 import io.socket.emitter.Emitter;
 import retrofit.Callback;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 //        });
 
         Log.d(LOG_TAG, "MainActivity onCreate");
+        app.excludeFromTransition(this);
     }
 
     @Override
@@ -130,7 +133,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     };
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(long userId, CircleImageView avatar) {
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+                avatar, "transition_name_avatar_main_chat");
+
+        startActivity(new Intent(MainActivity.this, ChatActivity.class), options.toBundle());
 
     }
 

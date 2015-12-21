@@ -1,22 +1,20 @@
 package io.msgapp.android;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.msgapp.android.model.ChatPreview;
 
 public class MainFragment extends Fragment {
@@ -25,7 +23,7 @@ public class MainFragment extends Fragment {
     protected RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener parent;
 
 //    public static MainFragment newInstance(String param1, String param2) {
 //        MainFragment fragment = new MainFragment();
@@ -62,12 +60,11 @@ public class MainFragment extends Fragment {
         list.add(new ChatPreview("", 0, "Bob", "Ok, send me an email", "14:46", ChatPreview.STATUS_READ));
         list.add(new ChatPreview("", 0, "Jack", "You too", "12:27", 0));
 
-        MainRecyclerViewAdapter adapter = new MainRecyclerViewAdapter(list);
+        final MainRecyclerViewAdapter adapter = new MainRecyclerViewAdapter(list);
         adapter.setClickListener(new MainRecyclerViewAdapter.ClickListener() {
             @Override
-            public void onItemClick(int position, View v) {
-                TextView userName = (TextView) v.findViewById(R.id.user_name_chat_preview);
-                Log.d(BuildVars.LOG_TAG, position + " " + userName.getText().toString());
+            public void onItemClick(int position, CircleImageView avatar) {
+                parent.onFragmentInteraction(adapter.getItem(position).getUserId(), avatar);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -75,17 +72,11 @@ public class MainFragment extends Fragment {
         return v;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            parent = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -95,12 +86,12 @@ public class MainFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        parent = null;
     }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(long userId, CircleImageView avatar);
     }
 
 }

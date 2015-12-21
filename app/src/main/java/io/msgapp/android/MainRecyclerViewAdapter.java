@@ -52,13 +52,17 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         @Override
         public void onClick(View v) {
             if (clickListener != null) {
-                clickListener.onItemClick(getAdapterPosition(), v);
+                clickListener.onItemClick(getAdapterPosition(), avatar);
             }
         }
     }
 
     public interface ClickListener {
-        void onItemClick(int position, View v);
+        void onItemClick(int position, CircleImageView avatar);
+    }
+
+    public ChatPreview getItem(int position) {
+        return this.previews.get(position);
     }
 
     public void setClickListener(ClickListener clickListener) {
@@ -81,12 +85,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ChatPreview preview = this.previews.get(position);
         // TODO Picasso.with(holder.context).load(preview.avatarUrl...
-        holder.userName.setText(preview.userName);
-        holder.messagePreview.setText(preview.messagePreview);
-        holder.messageWhen.setText(preview.messageWhen);
+        holder.userName.setText(preview.getUserName());
+        holder.messagePreview.setText(preview.getMessagePreview());
+        holder.messageWhen.setText(preview.getMessageWhen());
 
 
-        switch (preview.status) {
+        switch (preview.getStatus()) {
             case ChatPreview.STATUS_LOCAL:
                 holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_error_grey));
                 break;
