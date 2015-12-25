@@ -43,9 +43,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             // This needs to be called on every new ViewHolder because the context is different
             // on each one and the tint is context dependant.
             // TODO: check if this is REALLY context dependant.
-            Util.tint(this.context, R.color.textSecondary, R.drawable.ic_cloud_grey,
-                      R.drawable.ic_clock_grey, R.drawable.ic_done_all_grey,
-                      R.drawable.ic_done_grey, R.drawable.ic_error_grey);
+            Util.tint(this.context, R.color.textSecondary, R.drawable.ic_clock_grey,
+                    R.drawable.ic_done_all_grey, R.drawable.ic_done_grey, R.drawable.ic_error_grey);
             Util.tint(this.context, R.color.green, R.drawable.ic_done_all_green);
         }
 
@@ -96,11 +95,11 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                 break;
 
             case ChatPreview.STATUS_SENT:
-                holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_cloud_grey));
+                holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_done_grey));
                 break;
 
             case ChatPreview.STATUS_DELIVERED:
-                holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_done_grey));
+                holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_done_all_grey));
                 break;
 
             case ChatPreview.STATUS_READ:
