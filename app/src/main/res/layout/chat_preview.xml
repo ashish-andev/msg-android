@@ -68,6 +68,6 @@
         android:layout_alignBottom="@+id/last_message_when"
         android:layout_toStartOf="@+id/last_message_when"
         android:layout_alignTop="@+id/textViewsWrapper"
-        android:src="@drawable/ic_cloud_grey"/>
+        android:src="@drawable/ic_done_all_grey"/>
 
 </RelativeLayout>
