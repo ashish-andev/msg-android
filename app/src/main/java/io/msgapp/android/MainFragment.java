@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.msgapp.android.model.ChatPreview;
+import io.msgapp.android.model.Message;
 
 public class MainFragment extends Fragment {
 
@@ -53,10 +54,10 @@ public class MainFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         List<ChatPreview> list = new ArrayList<>();
-        list.add(new ChatPreview("", 0, "John", "Hey man!!", "20:34", ChatPreview.STATUS_SENT));
-        list.add(new ChatPreview("", 0, "Lara", "Good night ^~^", "20:03", ChatPreview.STATUS_READ));
-        list.add(new ChatPreview("", 0, "Frank", "I'll check that", "19:22", ChatPreview.STATUS_DELIVERED));
-        list.add(new ChatPreview("", 0, "Bob", "Ok, send me an email", "14:46", ChatPreview.STATUS_READ));
+        list.add(new ChatPreview("", 0, "John", "Hey man!!", "20:34", Message.STATUS_SENT));
+        list.add(new ChatPreview("", 0, "Lara", "Good night ^~^", "20:03", Message.STATUS_READ));
+        list.add(new ChatPreview("", 0, "Frank", "I'll check that", "19:22", Message.STATUS_DELIVERED));
+        list.add(new ChatPreview("", 0, "Bob", "Ok, send me an email", "14:46", Message.STATUS_READ));
         list.add(new ChatPreview("", 0, "Jack", "You too", "12:27", 0));
 
         final MainRecyclerViewAdapter adapter = new MainRecyclerViewAdapter(list);

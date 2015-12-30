@@ -12,6 +12,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.msgapp.android.model.ChatPreview;
+import io.msgapp.android.model.Message;
 
 /**
  * Created by matheus on 11/15/15.
@@ -90,19 +91,19 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
 
         switch (preview.getStatus()) {
-            case ChatPreview.STATUS_LOCAL:
+            case Message.STATUS_LOCAL:
                 holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_error_grey));
                 break;
 
-            case ChatPreview.STATUS_SENT:
+            case Message.STATUS_SENT:
                 holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_done_grey));
                 break;
 
-            case ChatPreview.STATUS_DELIVERED:
+            case Message.STATUS_DELIVERED:
                 holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_done_all_grey));
                 break;
 
-            case ChatPreview.STATUS_READ:
+            case Message.STATUS_READ:
                 holder.messageStatus.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_done_all_green));
                 break;
             default:
